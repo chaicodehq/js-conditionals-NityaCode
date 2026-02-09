@@ -33,5 +33,38 @@
  * @returns {number} Parking fee or -1 for invalid input
  */
 export function calculateParkingFee(hours, vehicleType) {
-  // Your code here
+  // Check for invalid input - hours and vehicleType
+  if (hours <= 0 || !(vehicleType === "car" || vehicleType === "motorcycle" || vehicleType === "bus")){
+    return -1;
+  }
+
+  // Function to generate parking fees
+  const genPerkingFee = (hours, firstRate, conRate, maxFee) => {
+    let hoursToCalculate = Math.ceil(hours);
+    let bill = 0;
+
+    if (hoursToCalculate > 1){
+      bill = firstRate + (hoursToCalculate - 1) * conRate;
+    } else {
+      bill = firstRate;
+    }
+
+    if (bill > maxFee){
+      bill = maxFee;
+    }
+    return bill;
+  }
+
+  // Generate Parking Fees by Car Type and Final Data
+  switch (vehicleType) {
+
+    case "car":
+      return genPerkingFee(hours, 5, 3, 30);
+
+    case "motorcycle":
+      return genPerkingFee(hours, 3, 2, 18);
+
+    case "bus":
+      return genPerkingFee(hours, 10, 7, 60);
+  }
 }
