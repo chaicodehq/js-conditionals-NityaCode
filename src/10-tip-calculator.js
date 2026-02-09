@@ -30,5 +30,39 @@
  * @returns {{ tipPercentage: number, tipAmount: number, totalAmount: number } | null}
  */
 export function calculateTip(billAmount, serviceRating) {
-  // Your code here
+  // Return null if billAmount is not valid or serviceRating isn't within 1-5 range
+  if (billAmount <= 0 || !Number.isInteger(serviceRating) || !(serviceRating >= 1 && serviceRating <= 5)){
+    return null;
+  }
+
+  let billWithTip;
+
+  let generateBill = (tipPercent) => {
+    let tip = (billAmount * tipPercent) / 100;
+    return {
+      "tipPercentage": tipPercent,
+      "tipAmount": tip,
+      "totalAmount": billAmount + tip
+    }
+  }
+
+  switch (serviceRating) {
+    case 1:
+      billWithTip = generateBill(5);
+      break;
+    case 2:
+      billWithTip = generateBill(10);
+      break;
+    case 3:
+      billWithTip = generateBill(15);
+      break;
+    case 4:
+      billWithTip = generateBill(20);
+      break;
+    case 5:
+      billWithTip = generateBill(25);
+      break;
+  }
+
+  return billWithTip;
 }
